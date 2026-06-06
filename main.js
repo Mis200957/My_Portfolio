@@ -1,6 +1,51 @@
 // ===== Year =====
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// ===== Language toggle (AR <-> EN) =====
+const LANG_KEY = 'portfolio_lang';
+const langToggle = document.getElementById('langToggle');
+
+const applyLang = (lang) => {
+  const html = document.documentElement;
+  const isEn = lang === 'en';
+  html.lang = isEn ? 'en' : 'ar';
+  html.dir = isEn ? 'ltr' : 'rtl';
+
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const en = el.getAttribute('data-en');
+    if (!el.hasAttribute('data-ar')) {
+      el.setAttribute('data-ar', el.textContent.trim());
+    }
+    el.textContent = isEn ? en : el.getAttribute('data-ar');
+  });
+
+  document.querySelectorAll('[data-en-html]').forEach(el => {
+    const en = el.getAttribute('data-en-html');
+    if (!el.hasAttribute('data-ar-html')) {
+      el.setAttribute('data-ar-html', el.innerHTML.trim());
+    }
+    el.innerHTML = isEn ? en : el.getAttribute('data-ar-html');
+  });
+
+  if (langToggle) {
+    langToggle.setAttribute('aria-label', isEn ? 'Switch language' : 'تبديل اللغة');
+    langToggle.title = isEn ? 'Switch language' : 'تبديل اللغة';
+  }
+
+  try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+};
+
+let currentLang = 'ar';
+try { currentLang = localStorage.getItem(LANG_KEY) || 'ar'; } catch (e) {}
+if (currentLang === 'en') applyLang('en');
+
+if (langToggle) {
+  langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    applyLang(currentLang);
+  });
+}
+
 // ===== Sticky nav shadow =====
 const nav = document.getElementById('nav');
 const onScroll = () => {
