@@ -682,14 +682,17 @@ html[dir="ltr"] .check-list li { padding-right: 0; padding-left: 32px; }
 html[dir="ltr"] .check-list li::before { right: auto; left: 0; }
 html[dir="ltr"] .nav-links a::after { right: auto; left: 0; }
 html[dir="ltr"] .timeline li:hover { transform: translateX(6px); }
-html[dir="ltr"] .nav-links {
-  border-right: none;
-  border-left: 1px solid var(--border);
-  right: auto; left: 0;
-  transform: translateX(-100%);
-}
-html[dir="ltr"] .nav-links.open { transform: translateX(0); }
 html[dir="ltr"] body, html[dir="ltr"] .hero-sub { letter-spacing: -0.005em; }
+
+@media (max-width: 960px) {
+  html[dir="ltr"] .nav-links {
+    border-right: none;
+    border-left: 1px solid var(--border);
+    right: auto; left: 0;
+    transform: translateX(-100%);
+  }
+  html[dir="ltr"] .nav-links.open { transform: translateX(0); }
+}
 
 /* ===== Print (CV-friendly) ===== */
 @media print {
